@@ -137,6 +137,13 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
+    "http://front:3000",
+    # "http://0.0.0.0:0",
+    "http://localhost"
 ]
-
+CORS_ALLOW_ALL_ORIGINS: True
+CORS_ALLOW_HEADERS = (
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Credentials',
+)
 FIXTURES_DIRS = os.path.join(BASE_DIR, 'catalog/fixtures')
