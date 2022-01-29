@@ -8,22 +8,19 @@ services:
     depends_on:
      - back
     tty: true
+    links:
+      - back
   back:
     build: ./lib_catalog
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && 
-      python3 manage.py createsuperuser \
-      --noinput \
-      --username django \
-      --email django &&
-      python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python ./parse_docx.py && python  manage.py loaddata catalog/fixtures/bbk_data.json && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./lib_catalog:/usr/src/app
-    # ports:
-    #   - 8000:8000
+    ports:
+      - 8000:8000
     expose:
       - "8000"
-    # env_file:
-    #   - ./.env.dev
+    env_file:
+      - ./.env.dev
     depends_on:
       - database
   database:
